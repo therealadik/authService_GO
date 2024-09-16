@@ -9,7 +9,12 @@ import (
 )
 
 func main() {
-	database.InitDB()
+	err := database.InitDB()
+	if err != nil{
+		log.Fatal(err.Error())
+		return
+	}
+
 	http.HandleFunc("/auth", handlers.AuthHandler)
 	http.HandleFunc("/refresh", handlers.RefreshTokens)
 	log.Fatal(http.ListenAndServe(":8080", nil))
